@@ -3,8 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 
-// const destinationRoutes = require('./routes/destinationRoutes');
 const errorHandler = require('./middlewares/errorHandler');
+const routes = require('./routes');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-// app.use('/api/destinations', destinationRoutes);
+app.use('/api/auth', routes.authRoutes);
 
 // Error Handling
 app.use(errorHandler);

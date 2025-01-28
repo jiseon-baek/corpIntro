@@ -11,7 +11,7 @@ const startServer = (port) => {
       console.log(
         `Port ${port} is in use. Trying another port...`
       );
-      startServer(port + 1);
+      startServer(5001);
     } else {
       console.error(err);
     }
