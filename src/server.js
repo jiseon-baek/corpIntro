@@ -1,5 +1,5 @@
 const app = require('./app');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 const startServer = (port) => {
   const server = app.listen(port, () => {
@@ -8,10 +8,7 @@ const startServer = (port) => {
 
   server.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
-      console.log(
-        `Port ${port} is in use. Trying another port...`
-      );
-      startServer(5001);
+      startServer(8081);
     } else {
       console.error(err);
     }
