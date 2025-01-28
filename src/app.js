@@ -18,7 +18,6 @@ app.use('/api/auth', routes.authRoutes);
 // Error Handling
 app.use(errorHandler);
 
-// Connect DB
 connectDB();
 
 module.exports = app;

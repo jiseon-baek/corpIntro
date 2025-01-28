@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const errorMessages = require('../messages/errorMessages');
+const successMessages = require('../messages/successMessages');
 
 exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -7,9 +9,9 @@ exports.registerUser = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: 'Email already exists' });
+      return res.status(400).json({
+        message: errorMessages.emailAlreadyExists,
+      });
     }
 
     const newUser = new User({
@@ -21,7 +23,7 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
     res
       .status(201)
-      .json({ message: 'User registered successfully' });
+      .json({ message: successMessages.userRegistered });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -38,13 +40,17 @@ exports.loginUser = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ message: 'Invalid email or password' });
+        .json({
+          message: errorMessages.invalidCredentials,
+        });
     }
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res
         .status(400)
-        .json({ message: 'Invalid email or password' });
+        .json({
+          message: errorMessages.invalidCredentials,
+        });
     }
     const token = jwt.sign(
       {
